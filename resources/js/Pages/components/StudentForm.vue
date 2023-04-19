@@ -6,7 +6,7 @@
                     <div class="form-floating ">
                         <input autofocus type="text" placeholder="name" id="name" v-model="student.name"
                             class="form-control">
-                        <label class="form-label" for="name">Nombre</label>
+                        <label class="form-label" for="name">Name</label>
                     </div>
                     <div v-if="errors.name">
                         <p class="text-danger">{{ errors.name }}</p>
@@ -18,7 +18,7 @@
                     <div class="form-floating ">
                         <input type="text" placeholder="last_name" id="last_name" v-model="student.last_name"
                             class="form-control">
-                        <label class="form-label" for="last_name">Apellido</label>
+                        <label class="form-label" for="last_name">Last Name</label>
                     </div>
                     <div v-if="errors.last_name">
                         <p class="text-danger">{{ errors.last_name }}</p>
@@ -31,7 +31,7 @@
                 <div class="form-group ">
                     <div class="form-floating ">
                         <input type="number" placeholder="age" id="age" v-model="student.age" class="form-control">
-                        <label class="form-label" for="age">Edad</label>
+                        <label class="form-label" for="age">Age</label>
                     </div>
                     <div v-if="errors.age">
                         <p class="text-danger">{{ errors.age }}</p>
@@ -42,7 +42,7 @@
                 <div class="form-group ">
                     <div class="form-floating ">
                         <input type="email" placeholder="email" id="email" v-model="student.email" class="form-control">
-                        <label class="form-label" for="email">Correo electrónico</label>
+                        <label class="form-label" for="email">Email</label>
                     </div>
                     <div v-if="errors.email">
                         <p class="text-danger">{{ errors.email }}</p>
@@ -55,7 +55,7 @@
                         <select multiple id="courses" v-model="student.courses" class="form-control">
                             <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.name }}</option>
                         </select>
-                        <label class="form-label" for="courses">Cursos</label>
+                        <label class="form-label" for="courses">Courses</label>
                     </div>
                     <div v-if="errors.courses">
                         <p class="text-danger">{{ errors.courses }}</p>
@@ -64,14 +64,10 @@
             </div>
         </div>
         <div class="row mb-4 justify-content-end">
-            <div class="col-md-2">
-                <inertia-link href="/students" class="btn btn-secondary btn-md shadow-sm">Regresar
-                </inertia-link>
-            </div>
             <div class="col-md-3">
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-lg btn-primary ">
-                        Procesar
+                        Process
                     </button>
                 </div>
             </div>

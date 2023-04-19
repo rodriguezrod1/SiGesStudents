@@ -7,6 +7,8 @@
                     <div class="block-header block-header-default border-bottom">
                         <h3 class="block-title">New Student</h3>
                         <div class="block-options">
+                            <inertia-link href="/students" class="btn btn-secondary btn-md shadow-sm">Go Back
+                            </inertia-link>
                         </div>
                     </div>
                     <div class="block-content">

@@ -170,14 +170,14 @@
                             <li class="nav-main-item">
                                 <inertia-link class="nav-main-link" href="/">
                                     <i class="nav-main-link-icon fa fa-list"></i>
-                                    <span class="nav-main-link-name">Cursos</span>
+                                    <span class="nav-main-link-name">Courses</span>
                                 </inertia-link>
                             </li>
 
                             <li class="nav-main-item">
                                 <inertia-link class="nav-main-link" href="/students">
                                     <i class="nav-main-link-icon fa fa-users"></i>
-                                    <span class="nav-main-link-name">Estudiantes</span>
+                                    <span class="nav-main-link-name">Studens</span>
                                 </inertia-link>
                             </li>
 

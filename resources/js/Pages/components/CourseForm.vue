@@ -53,10 +53,6 @@
             </div>
         </div>
         <div class="row mb-4 justify-content-end">
-            <div class="col-md-2">
-                <inertia-link href="/" class="btn btn-secondary btn-md shadow-sm">Go back
-                </inertia-link>
-            </div>
             <div class="col-md-3">
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-lg btn-primary ">

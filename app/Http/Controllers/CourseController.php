@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class CourseController extends Controller
 {
@@ -16,15 +17,32 @@ class CourseController extends Controller
      */
     public function index()
     {
+        $sixMonthsAgo = Carbon::now()->subMonths(6);
+
+        $top = Course::withCount('students')
+            ->whereHas('students', function ($query) use ($sixMonthsAgo) {
+                $query->where('courses.created_at', '>', $sixMonthsAgo);
+            })
+            ->orderByDesc('students_count')
+            ->take(3)
+            ->get();
+
+        $courses_one = Course::whereHas('students', function ($query) {
+            $query->groupBy('course_id')
+                ->havingRaw('COUNT(*) = 1');
+        })->get();
+
         $courses = Course::withCount('students')->get();
         return Inertia::render('Courses/Index', [
             'courses' => $courses,
+            'top' => $top,
+            'one' => $courses_one
         ]);
     }
 
 
 
-     /**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -88,7 +106,7 @@ class CourseController extends Controller
         ]);
     }
 
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -112,9 +130,9 @@ class CourseController extends Controller
             ->with('success', 'Course updated successfully.');
     }
 
-    
 
-     /**
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Course  $course
