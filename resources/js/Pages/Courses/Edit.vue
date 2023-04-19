@@ -7,7 +7,8 @@
                     <div class="block-header block-header-default border-bottom">
                         <h3 class="block-title">Edit Course</h3>
                         <div class="block-options">
-
+                            <inertia-link href="/" class="btn btn-secondary btn-md shadow-sm">Go back
+                            </inertia-link>
                         </div>
                     </div>
                     <div class="block-content">

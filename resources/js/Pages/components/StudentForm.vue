@@ -53,7 +53,10 @@
                 <div class="form-group ">
                     <div class="form-floating ">
                         <select multiple id="courses" v-model="student.courses" class="form-control">
-                            <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.name }}</option>
+                            <option v-for="course in courses" :key="course.id" :value="course.id"
+                                :selected="student.courses.includes(course.id)">
+                                {{ course.name }}
+                            </option>
                         </select>
                         <label class="form-label" for="courses">Courses</label>
                     </div>
@@ -102,14 +105,15 @@ export default {
         },
     },
 
-    setup(props) {
+    setup(props) {  
+        const idsCourses = !props.student?.id ? '' : props.student.courses.map(c => c.id);
 
         const student = reactive({
             name: !props.student?.id ? '' : props.student.name,
             last_name: !props.student?.id ? '' : props.student.last_name,
             age: !props.student?.id ? '' : props.student.age,
             email: !props.student?.id ? '' : props.student.email,
-            courses: !props.student?.id ? '' : props.student.courses
+            courses: idsCourses
         })
 
         function handlerSubmit() {

@@ -27,12 +27,10 @@ class CourseController extends Controller
             ->take(3)
             ->get();
 
-        $courses_one = Course::whereHas('students', function ($query) {
-            $query->groupBy('course_id')
-                ->havingRaw('COUNT(*) = 1');
-        })->get();
+        $courses_one = Course::has('students', '=', 1)->withCount('students')->get();
 
         $courses = Course::withCount('students')->get();
+
         return Inertia::render('Courses/Index', [
             'courses' => $courses,
             'top' => $top,
