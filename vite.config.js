@@ -14,10 +14,7 @@ export default defineConfig({
                 'resources/sass/codebase/themes/flat.scss',
                 'resources/sass/codebase/themes/pulse.scss',
                 'resources/js/codebase/app.js',
-                'resources/js/app.js',
-                'resources/js/pages/datatables.js',
-                'resources/js/pages/slick.js',
-                "resources/css/app.css", "resources/js/app.js"
+                'resources/js/app.js'
             ],
             refresh: true,
         }),

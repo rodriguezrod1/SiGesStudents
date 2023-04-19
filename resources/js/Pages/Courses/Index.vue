@@ -108,7 +108,7 @@
             <div class="col-md-12">
                 <div class="block block-rounded block-bordered">
                     <div class="block-header block-header-default border-bottom">
-                        <h3 class="block-title">(1) student courses</h3>
+                        <h3 class="block-title">Courses with students</h3>
                         <div class="block-options">
                         </div>
                     </div>
@@ -124,16 +124,22 @@
                                                 <th>Schedule</th>
                                                 <th>Start date</th>
                                                 <th>End date</th>
-                                                <th># Students</th>
+                                                <th>Students</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="course in one" :key="course.id">
+                                            <tr v-for="course in courses_st" :key="course.id">
                                                 <td>{{ course.name }}</td>
                                                 <td>{{ course.schedule }}</td>
                                                 <td>{{ course.start_date }}</td>
                                                 <td>{{ course.end_date }}</td>
-                                                <td>{{ course.students_count }}</td>
+                                                <td>
+                                                    <ul>
+                                                        <li v-for="student in course.students" :key="student.id">
+                                                            {{ student.name }}  - {{ student.last_name }}
+                                                        </li>
+                                                    </ul>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -162,7 +168,7 @@ export default {
     props: {
         courses: Array,
         top: Array,
-        one: Array
+        courses_st: Array
     },
     setup() {
         function deleteCourse(id) {

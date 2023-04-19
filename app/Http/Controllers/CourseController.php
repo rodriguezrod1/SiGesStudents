@@ -30,14 +30,14 @@ class CourseController extends Controller
             ->take(3)
             ->get();
 
-         // Get all courses that have only one student and their student counts.
-        $courses_one = Course::has('students', '=', 1)->withCount('students')->get();
+         // Get all courses wiht students.
+        $courses_st = Course::with('students')->get();
 
         // Get all courses and their student counts.
         $courses = Course::withCount('students')->get();
 
         // Render the inertia view with the course information.
-        return Inertia::render('Courses/Index', compact('courses', 'top', 'courses_one'));
+        return Inertia::render('Courses/Index', compact('courses', 'top', 'courses_st'));
     }
 
 

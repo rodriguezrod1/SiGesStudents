@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Esta es una mini aplicación web para la gestión (CRUD) de estudiantes y cursos, donde se crean y asignan estudiantes a cursos, se visualizan la cantidad de estudiantes por cursos, cursos asociados a estudiantes,  Top 3 de los cursos con más estudiantes en los últimos 6 meses, lista de cursos donde se encuentra asignado un estudiante.
+Esta es una mini aplicación web para la gestión (CRUD) de estudiantes y cursos, donde se crean y asignan estudiantes a cursos, se visualizan la cantidad de estudiantes por cursos, cursos asociados a estudiantes,  Top 3 de los cursos con más estudiantes en los últimos 6 meses, lista de cursos que tengan cada estudiante asignado.
 
 ## Tecnologías
 
