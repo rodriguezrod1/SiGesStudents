@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateCouseRequest;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use Inertia\Inertia;
@@ -17,8 +18,10 @@ class CourseController extends Controller
      */
     public function index()
     {
+         // Set the date six months before now.
         $sixMonthsAgo = Carbon::now()->subMonths(6);
 
+        // Get the top three courses with the highest number of students in the last six months.
         $top = Course::withCount('students')
             ->whereHas('students', function ($query) use ($sixMonthsAgo) {
                 $query->where('courses.created_at', '>', $sixMonthsAgo);
@@ -27,15 +30,14 @@ class CourseController extends Controller
             ->take(3)
             ->get();
 
+         // Get all courses that have only one student and their student counts.
         $courses_one = Course::has('students', '=', 1)->withCount('students')->get();
 
+        // Get all courses and their student counts.
         $courses = Course::withCount('students')->get();
 
-        return Inertia::render('Courses/Index', [
-            'courses' => $courses,
-            'top' => $top,
-            'one' => $courses_one
-        ]);
+        // Render the inertia view with the course information.
+        return Inertia::render('Courses/Index', compact('courses', 'top', 'courses_one'));
     }
 
 
@@ -55,18 +57,11 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreUpdateCouseRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCouseRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'schedule' => 'required',
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-        ]);
-
         Course::create($request->all());
 
         return redirect()->route('courses.index')
@@ -99,9 +94,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return Inertia::render('Courses/Edit', [
-            'course' => $course,
-        ]);
+        return Inertia::render('Courses/Edit', compact('course'));
     }
 
 
@@ -109,19 +102,12 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreUpdateCouseRequest  $request
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(StoreUpdateCouseRequest $request, Course $course)
     {
-        $request->validate([
-            'name' => 'required',
-            'schedule' => 'required',
-            'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-        ]);
-
         $course->update($request->all());
 
         return redirect()->route('courses.index')

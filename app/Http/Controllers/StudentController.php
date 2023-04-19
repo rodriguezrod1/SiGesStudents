@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateStudentRequest;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Course;
@@ -19,9 +20,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with('courses')->get();
-        return Inertia::render('Students/Index', [
-            'students' => $students,
-        ]);
+        return Inertia::render('Students/Index', compact('students'));
     }
 
 
@@ -34,9 +33,7 @@ class StudentController extends Controller
     public function create()
     {
         $courses = Course::all();
-        return Inertia::render('Students/Create', [
-            'courses' => $courses
-        ]);
+        return Inertia::render('Students/Create', compact('courses'));
     }
 
 
@@ -44,26 +41,15 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreUpdateStudentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateStudentRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'last_name' => 'required',
-            'age' => 'required|integer',
-            'email' => 'required|email|unique:students',
-            'courses' => 'required',
-        ]);
+        // Create a new Student object and assign the values ​​provided in the request
+        $student = Student::create($request->only(['name', 'last_name', 'age', 'email']));
 
-        $student = new Student();
-        $student->name = $request->name;
-        $student->last_name = $request->last_name;
-        $student->age = $request->age;
-        $student->email = $request->email;
-        $student->save();
-
+        // Assign the selected courses to the newly created student
         $student->courses()->attach($request->courses);
 
         return redirect()->route('students.index')
@@ -93,14 +79,11 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-        $student = Student::with('courses')->findOrFail($id);
+        $student->load('courses');
         $courses = Course::all();
-        return Inertia::render('Students/Edit', [
-            'student' => $student,
-            'courses' => $courses,
-        ]);
+        return Inertia::render('Students/Edit', compact('student', 'courses'));
     }
 
 
@@ -122,12 +105,9 @@ class StudentController extends Controller
             'courses' => 'required'
         ]);
 
-        $student->name = $request->name;
-        $student->last_name = $request->last_name;
-        $student->age = $request->age;
-        $student->email = $request->email;
-        $student->save();
+        $student->update($request->only(['name', 'last_name', 'age', 'email']));
 
+        // Assign the selected courses to the newly updated student
         $student->courses()->sync($request->courses);
 
         return redirect()->route('students.index')
