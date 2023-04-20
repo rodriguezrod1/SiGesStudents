@@ -128,19 +128,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="course in courses_st" :key="course.id">
-                                                <td>{{ course.name }}</td>
-                                                <td>{{ course.schedule }}</td>
-                                                <td>{{ course.start_date }}</td>
-                                                <td>{{ course.end_date }}</td>
-                                                <td>
-                                                    <ul>
-                                                        <li v-for="student in course.students" :key="student.id">
-                                                            {{ student.name }}  - {{ student.last_name }}
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
+                                            <template v-for="course in courses_st" :key="course.id">
+                                                <tr v-if="course.students.length > 0">
+                                                    <td>{{ course.name }}</td>
+                                                    <td>{{ course.schedule }}</td>
+                                                    <td>{{ course.start_date }}</td>
+                                                    <td>{{ course.end_date }}</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li v-for="student in course.students" :key="student.id">
+                                                                {{ student.name }} - {{ student.last_name }}
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </template>
                                         </tbody>
                                     </table>
                                 </div>

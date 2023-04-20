@@ -18,19 +18,15 @@ class CourseController extends Controller
      */
     public function index()
     {
-         // Set the date six months before now.
-        $sixMonthsAgo = Carbon::now()->subMonths(6);
-
         // Get the top three courses with the highest number of students in the last six months.
-        $top = Course::withCount('students')
-            ->whereHas('students', function ($query) use ($sixMonthsAgo) {
-                $query->where('courses.created_at', '>', $sixMonthsAgo);
-            })
-            ->orderByDesc('students_count')
-            ->take(3)
-            ->get();
+        $top = Course::withCount(['students' => function ($query) {
+            $query->where('courses.created_at', '>=', Carbon::now()->subMonths(6));
+        }])
+        ->orderByDesc('students_count')
+        ->take(3)
+        ->get();
 
-         // Get all courses wiht students.
+        // Get all courses wiht students.
         $courses_st = Course::with('students')->get();
 
         // Get all courses and their student counts.
